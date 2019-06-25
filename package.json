@@ -1,0 +1,23 @@
+{
+  "name": "avalon-bot",
+  "version": "0.1.0",
+  "description": "A discord bot to play The Resistance: Avalon with friends",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ekarz/avalon-bot.git"
+  },
+  "keywords": [
+    "avalon",
+    "bot"
+  ],
+  "author": "Antoine Robillard",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Ekarz/avalon-bot/issues"
+  },
+  "homepage": "https://github.com/Ekarz/avalon-bot#readme"
+}
