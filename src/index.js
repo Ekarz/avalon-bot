@@ -21,6 +21,10 @@ client.on('message', message => {
     if (!client.commands.has(commandName)) return;
     const command = client.commands.get(commandName);
 
+    if (command.channelOnly && message.channel.type !== 'text') {
+        return message.reply('This command must be used in a channel.')
+    }
+
     try {
         command.execute(message, args);
     } catch (e) {
