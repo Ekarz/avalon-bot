@@ -1,34 +1,27 @@
-const GOOD = 'good';
-const EVIL = 'evil';
-
 exports.servant = name => ({
     name,
     role: 'Loyal servant of Arthur',
-    alignment: GOOD,
+    isEvil: false,
     knowledge: () => false
 });
 
 exports.merlin = name => ({
     name,
     role: 'Merlin',
-    alignment: GOOD,
-    knowledge: other => other.alignment === EVIL
+    isEvil: false,
+    knowledge: other => other.isEvil
 });
-
-
-const evilAttributes = {
-    alignment: EVIL,
-    knowledge: other => other.alignment === EVIL && other.name !== name
-};
 
 exports.minion = name => ({
     name,
     role: 'Minion of Mordred',
-    ...evilAttributes
+    isEvil: true,
+    knowledge: other => other.isEvil && other.name !== name
 });
 
 exports.assassin = name => ({
     name,
     role: 'Assassin',
-    ...evilAttributes
+    isEvil: true,
+    knowledge: other => other.isEvil && other.name !== name
 });

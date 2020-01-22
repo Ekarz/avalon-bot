@@ -9,6 +9,8 @@ exports.attributeRoles = playerNames => {
     return roles.map(role => role(shuffled.pop()));
 };
 
-exports.getKnowledgeMap = () => {
-
-};
+exports.getKnowledgeMap = players => players.reduce((map, player) => ({
+    ...map,
+    [player.name]: players.filter(player.knowledge)
+                          .map(seenPlayer => seenPlayer.name)
+}), {});
