@@ -1,5 +1,3 @@
-const { prefix } = require('../config.json');
-
 let playerTags = [];
 exports.playerTags = playerTags;
 

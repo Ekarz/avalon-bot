@@ -1,4 +1,3 @@
-const { prefix } = require('../config.json');
 const { playerTags } = require('./host');
 
 exports.name = 'join';

@@ -6,7 +6,7 @@ const roles = [merlin, servant, servant, assassin, minion];
 exports.attributeRoles = playerNames => {
     const shuffled = shuffle(playerNames);
 
-    return roles.map(role => role(shuffled.pop()));
+    return shuffle(roles.map(role => role(shuffled.pop())));
 };
 
 exports.getKnowledgeMap = players => players.reduce((map, player) => ({
