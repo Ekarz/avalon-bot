@@ -38,7 +38,7 @@ const startQuest = () => {
 const startTeamBuilding = () => {
     state.attempts++;
 
-    const leader = state.players[state.leaderIndex++ % state.players.length];
+    const leader = state.playerTags[state.leaderIndex++ % state.playerTags.length];
     state.channel.send(`<@${leader}>, please put forward ${questPlayersMatrix[state.quest - 1][state.players.length - 5]} people to send to a Quest.`);
     state.phase = 'TEAM_BUILDING';
 };
@@ -52,6 +52,9 @@ exports.startVotes = () => {
         state.phase = 'VOTES';
     }
 };
+
+const isLastAttempt = () => (state.quest === 1 && state.attempts === 2)
+    || (state.attempts === state.players.filter(player => player.isEvil) + 1);
 
 exports.handleVoteResults = () => {
     const stringData = [];
@@ -100,7 +103,7 @@ exports.handleQuestResults = () => {
     handleEndOfQuest();
 };
 
-const isFailed = results => results.filter(result => result === 'fail').length >= 1;
+const isFailed = results => results.filter(result => result === 'fail').length >= ((state.players.length >= 7 && state.quest === 4) ? 2 : 1);
 
 const handleEndOfQuest = () => {
     if (state.results.filter(res => res === 'FAIL').length >= 3) {
@@ -115,5 +118,13 @@ const handleEndOfQuest = () => {
     }
 };
 
-const isLastAttempt = () => (state.quest === 1 && state.attempts === 2)
-    || (state.attempts === state.players.filter(player => player.isEvil) + 1);
+exports.kill = playerTag => {
+    const stringData = [];
+    const merlinName = state.players.find(player => player.role === 'Merlin').name;
+
+    stringData.push(`Merlin was ${merlinName} !`);
+    stringData.push(playerTag === merlinName ? 'Evil wins !' : 'Good wins !');
+    state.channel.send(stringData.join('\n'));
+
+    state.endGame()
+};
