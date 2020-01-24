@@ -47,5 +47,9 @@ exports.startVotes = (playerTags) => {
     state.phase = 'VOTES';
 };
 
+exports.handleVoteResults = () => {
+
+};
+
 const isLastAttempt = () => (state.quest === 1 && state.attempts === 2)
     || (state.attempts === state.players.filter(player => player.isEvil) + 1);
