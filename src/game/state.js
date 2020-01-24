@@ -14,3 +14,10 @@ exports.actions = [];
 exports.results = [];
 
 exports.phase = '';
+
+exports.endGame = () => {
+    this.host = '';
+    this.channel = '';
+    this.playerTags = [];
+    this.started = false;
+};

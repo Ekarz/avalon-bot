@@ -1,4 +1,5 @@
 const state = require('./state');
+const { shuffle } = require('../utils/arrays');
 const { getKnowledgeMap } = require('./roleAttribution');
 const { attributeRoles } = require('./roleAttribution');
 
@@ -84,7 +85,34 @@ const startQuestActions = () => {
 };
 
 exports.handleQuestResults = () => {
+    const results = shuffle(state.actions.map(Object.values).flat());
 
+    state.channel.send(`The results are : ${results}`);
+
+    if (isFailed(results)) {
+        state.channel.send(`The quest has failed...`);
+        state.results.push('FAIL');
+    } else {
+        state.channel.send(`The quest has succeeded !`);
+        state.results.push('SUCCESS');
+    }
+
+    handleEndOfQuest();
+};
+
+const isFailed = results => results.filter(result => result === 'fail').length >= 1;
+
+const handleEndOfQuest = () => {
+    if (state.results.filter(res => res === 'FAIL').length >= 3) {
+        state.channel.send(`Evil wins !`);
+        state.endGame();
+    } else if (state.results.filter(res => res === 'SUCCESS').length >= 3) {
+        state.channel.send(`Good wins ! 
+        ${state.players.find(player => player.role === 'Assassin').name}, as the Assassin, who do you *kill* ?`);
+        state.phase = 'ASSASSIN';
+    } else {
+        startQuest();
+    }
 };
 
 const isLastAttempt = () => (state.quest === 1 && state.attempts === 2)
