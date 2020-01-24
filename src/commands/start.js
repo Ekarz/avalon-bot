@@ -1,4 +1,5 @@
 const state = require('../game/state');
+const { startGame } = require('../game/manager');
 
 exports.name = 'start';
 exports.channelOnly = true;
@@ -11,4 +12,5 @@ exports.execute = (message, args) => {
 
     state.started = true;
     message.react('👍');
+    startGame(message);
 };
