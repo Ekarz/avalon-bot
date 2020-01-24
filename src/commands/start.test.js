@@ -3,9 +3,16 @@ const host = require('./host');
 const start = require('./start');
 const state = require('../game/state');
 
+jest.mock('../game/manager');
+
 const message = name => ({
     author: name,
-    react: jest.fn()
+    react: jest.fn(),
+    channel: { send: jest.fn() }
+});
+
+beforeAll(() => {
+    state.channel = { send: () => null };
 });
 
 it('should not start if there is not enough players', () => {

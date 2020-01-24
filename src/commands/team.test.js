@@ -6,6 +6,10 @@ const message = name => ({
     react: jest.fn()
 });
 
+beforeAll(() => {
+    state.channel = { send: () => null };
+});
+
 it('should refuse command if game is not started', () => {
     state.started = false;
     state.phase = 'TEAM_BUILDING';
@@ -57,7 +61,6 @@ it('should refuse command if wrong players', () => {
 
     expect(msg.react).toHaveBeenCalledWith('🚫');
 });
-
 
 it('should accept team', () => {
     state.started = true;

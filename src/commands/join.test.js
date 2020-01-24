@@ -1,11 +1,15 @@
 const join = require('./join');
 const host = require('./host');
-const start = require('./start');
+const state = require('../game/state');
 const { playerTags } = require('../game/state');
 
 const message = name => ({
     author: name,
     react: jest.fn()
+});
+
+beforeEach(() => {
+    state.started = false;
 });
 
 it('should not join if there is no hosted game', () => {
@@ -38,7 +42,7 @@ it('should not join if the game is already started', () => {
     join.execute(message('Edith'));
     expect(playerTags).toHaveLength(5);
 
-    start.execute(message('Alice'));
+    state.started = true;
     join.execute(message('Frank'));
     expect(playerTags).toHaveLength(5);
 });
