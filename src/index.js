@@ -6,7 +6,9 @@ const client = new Discord.Client();
 client.commands = new Discord.Collection();
 
 const commandFiles = fs.readdirSync('src/commands')
+                       .filter(file => !file.endsWith('.test.js'))
                        .filter(file => file.endsWith('.js'));
+
 for (const file of commandFiles) {
     const command = require(`./commands/${file}`);
     client.commands.set(command.name, command);
@@ -22,10 +24,10 @@ client.on('message', message => {
     const command = client.commands.get(commandName);
 
     if (command.channelOnly && message.channel.type !== 'text') {
-        return message.reply('This command must be used in a channel.')
+        return message.reply('This command must be used in a channel.');
     }
     if (command.dmOnly && message.guild !== null) {
-        return message.reply('This command must be used in a DM.')
+        return message.reply('This command must be used in a DM.');
     }
 
     try {
