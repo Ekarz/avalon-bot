@@ -24,6 +24,9 @@ client.on('message', message => {
     if (command.channelOnly && message.channel.type !== 'text') {
         return message.reply('This command must be used in a channel.')
     }
+    if (command.dmOnly && message.guild !== null) {
+        return message.reply('This command must be used in a DM.')
+    }
 
     try {
         command.execute(message, args);

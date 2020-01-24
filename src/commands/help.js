@@ -1,6 +1,7 @@
 const { prefix } = require('../config.json');
 
 exports.name = 'help';
+exports.dmOnly = true;
 exports.description = 'List all commands and their description.';
 exports.usage = '[command name]';
 exports.execute = (message, args) => {
