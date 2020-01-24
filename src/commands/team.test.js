@@ -21,6 +21,7 @@ it('should refuse command if game is not started', () => {
     team.execute(msg, ['Alice', 'Bob']);
 
     expect(msg.react).toHaveBeenCalledWith('🚫');
+    expect(state.team).toEqual([]);
 });
 
 it('should refuse command if wrong phase', () => {
@@ -34,6 +35,7 @@ it('should refuse command if wrong phase', () => {
     team.execute(msg, ['Alice', 'Bob']);
 
     expect(msg.react).toHaveBeenCalledWith('🚫');
+    expect(state.team).toEqual([]);
 });
 
 it('should refuse command if number of players', () => {
@@ -47,6 +49,7 @@ it('should refuse command if number of players', () => {
     team.execute(msg, ['Alice', 'Bob', 'Connor']);
 
     expect(msg.react).toHaveBeenCalledWith('🚫');
+    expect(state.team).toEqual([]);
 });
 
 it('should refuse command if wrong players', () => {
@@ -60,6 +63,7 @@ it('should refuse command if wrong players', () => {
     team.execute(msg, ['Alice', 'Toto']);
 
     expect(msg.react).toHaveBeenCalledWith('🚫');
+    expect(state.team).toEqual([]);
 });
 
 it('should accept team', () => {
@@ -73,4 +77,5 @@ it('should accept team', () => {
     team.execute(msg, ['Alice', 'Bob']);
 
     expect(msg.react).toHaveBeenCalledWith('👍');
+    expect(state.team).toEqual(['Alice', 'Bob']);
 });

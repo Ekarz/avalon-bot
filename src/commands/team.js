@@ -13,5 +13,6 @@ exports.execute = (message, args) => {
     }
 
     message.react('👍');
-    startVotes(args);
+    state.team = args;
+    startVotes();
 };

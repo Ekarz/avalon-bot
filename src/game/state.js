@@ -8,7 +8,9 @@ exports.quest = 0;
 exports.attempts = 0;
 exports.leaderIndex = 0;
 
-exports.results = [];
+exports.team = [];
 exports.votes = [];
+exports.actions = [];
+exports.results = [];
 
 exports.phase = '';
