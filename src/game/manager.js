@@ -40,6 +40,11 @@ const startTeamBuilding = () => {
 
     const leader = state.playerTags[state.leaderIndex++ % state.playerTags.length];
     state.channel.send(`<@${leader}>, please put forward ${questPlayersMatrix[state.quest - 1][state.players.length - 5]} people to send to a Quest.`);
+
+    if (needsDoubleFail()) {
+        state.channel.send(`Please note that this quest needs 2 Fails to fail.`);
+    }
+
     state.phase = 'TEAM_BUILDING';
 };
 
@@ -103,7 +108,8 @@ exports.handleQuestResults = () => {
     handleEndOfQuest();
 };
 
-const isFailed = results => results.filter(result => result === 'fail').length >= ((state.players.length >= 7 && state.quest === 4) ? 2 : 1);
+const isFailed = results => results.filter(result => result === 'fail').length >= (needsDoubleFail() ? 2 : 1);
+const needsDoubleFail = () => state.players.length >= 7 && state.quest === 4;
 
 const handleEndOfQuest = () => {
     if (state.results.filter(res => res === 'FAIL').length >= 3) {
