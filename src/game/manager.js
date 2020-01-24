@@ -53,7 +53,7 @@ exports.startVotes = () => {
         state.channel.send('This is the last proposal for this quest and as such it cannot be rejected.');
         startQuestActions();
     } else {
-        state.channel.send(`Everyone, please *Accept* or *Reject* this team.`);
+        state.channel.send(`Everyone, please **Accept** or **Reject** this team.`);
         state.phase = 'VOTES';
     }
 };
@@ -88,7 +88,7 @@ const isRejected = votes => {
 
 const startQuestActions = () => {
     state.attempts = 0;
-    state.channel.send(`${state.team} have been chosen to go in a Quest ! They can make it *Succeed* or *Fail*`);
+    state.channel.send(`${state.team} have been chosen to go in a Quest ! They can make it **Succeed** or **Fail**`);
     state.phase = 'QUEST';
 };
 
@@ -117,7 +117,7 @@ const handleEndOfQuest = () => {
         state.endGame();
     } else if (state.results.filter(res => res === 'SUCCESS').length >= 3) {
         state.channel.send(`Good wins ! 
-        ${state.players.find(player => player.role === 'Assassin').name}, as the Assassin, who do you *kill* ?`);
+        ${state.players.find(player => player.role === 'Assassin').name}, as the Assassin, who do you **kill** ?`);
         state.phase = 'ASSASSIN';
     } else {
         startQuest();
@@ -126,10 +126,10 @@ const handleEndOfQuest = () => {
 
 exports.kill = playerTag => {
     const stringData = [];
-    const merlinName = state.players.find(player => player.role === 'Merlin').name;
+    const merlinsName = state.players.find(player => player.role === 'Merlin').name;
 
-    stringData.push(`Merlin was ${merlinName} !`);
-    stringData.push(playerTag === merlinName ? 'Evil wins !' : 'Good wins !');
+    stringData.push(`Merlin was ${merlinsName} !`);
+    stringData.push(playerTag === merlinsName ? 'Evil wins !' : 'Good wins !');
     state.channel.send(stringData.join('\n'));
 
     state.endGame()
