@@ -1,29 +1,24 @@
 const host = require('./host');
 const { playerTags } = require('../game/state');
 
-const messageAlice = {
-    author: 'Alice',
+const message = name => ({
+    author: name,
     react: jest.fn()
-};
-
-const messageBob = {
-    author: 'Bob',
-    react: jest.fn()
-};
+});
 
 it('should host a new game', () => {
     expect(playerTags).toHaveLength(0);
 
-    host.execute(messageAlice);
+    host.execute(message('Alice'));
 
     expect(playerTags).toHaveLength(1);
 });
 
 it('should not host a new game if one is already hosted', () => {
-    host.execute(messageAlice);
-    host.execute(messageAlice);
+    host.execute(message('Alice'));
+    host.execute(message('Alice'));
     expect(playerTags).toHaveLength(1);
 
-    host.execute(messageBob);
+    host.execute(message('Bob'));
     expect(playerTags).toHaveLength(1);
 });

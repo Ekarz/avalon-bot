@@ -16,8 +16,8 @@ it('should give info to players with knowledge (5 players)', () => {
     const map = getKnowledgeMap(players);
 
     expect(map['Alice']).toEqual(['Connor', 'Dave']);
-    expect(map['Bob']).toEqual( []);
+    expect(map['Bob']).toEqual([]);
     expect(map['Connor']).toEqual(['Dave']);
     expect(map['Dave']).toEqual(['Connor']);
-    expect(map['Edith']).toEqual( []);
+    expect(map['Edith']).toEqual([]);
 });

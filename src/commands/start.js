@@ -9,5 +9,6 @@ exports.execute = (message, args) => {
         return message.react('🚫');
     }
 
+    state.started = true;
     message.react('👍');
 };
