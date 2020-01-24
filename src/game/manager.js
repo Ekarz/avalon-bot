@@ -2,7 +2,7 @@ const state = require('./state');
 const { getKnowledgeMap } = require('./roleAttribution');
 const { attributeRoles } = require('./roleAttribution');
 
-const questPlayersMatrix = [
+exports.questPlayersMatrix = [
     [2, 2, 2, 3, 3, 3],
     [3, 3, 3, 4, 4, 4],
     [2, 4, 3, 4, 4, 4],
@@ -38,8 +38,12 @@ const startTeamBuilding = message => {
     state.attempts++;
 
     const leader = state.players[state.leaderIndex++ % state.players.length];
-    message.channel.send(`<@${leader}>, please put forward ${questPlayersMatrix[state.quest - 1][state.players.length]} people to send to a Quest.`);
+    message.channel.send(`<@${leader}>, please put forward ${questPlayersMatrix[state.quest - 1][state.players.length - 5]} people to send to a Quest.`);
     state.phase = 'TEAM_BUILDING'
+};
+
+exports.startVotes = (message, playerTags) => {
+
 };
 
 const isLastAttempt = () => (state.quest === 1 && state.attempts === 2)
