@@ -1,4 +1,5 @@
 exports.host = '';
+exports.channel = '';
 exports.playerTags = [];
 exports.started = false;
 

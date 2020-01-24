@@ -11,6 +11,7 @@ exports.execute = (message, args) => {
     }
 
     state.started = true;
+    state.channel = message.channel;
     message.react('👍');
-    startGame(message);
+    startGame();
 };

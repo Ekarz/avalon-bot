@@ -10,13 +10,13 @@ exports.questPlayersMatrix = [
     [3, 4, 4, 5, 5, 4]
 ];
 
-exports.startGame = message => {
-    message.channel.send('Attributing roles to players...');
+exports.startGame = () => {
+    state.channel.send('Attributing roles to players...');
     state.players = attributeRoles(state.playerTags);
 
     sendInformationToPlayers();
 
-    startQuest(message);
+    startQuest();
 };
 
 const sendInformationToPlayers = () => {
@@ -28,22 +28,23 @@ const sendInformationToPlayers = () => {
     });
 };
 
-const startQuest = message => {
+const startQuest = () => {
     state.quest++;
 
-    startTeamBuilding(message);
+    startTeamBuilding();
 };
 
-const startTeamBuilding = message => {
+const startTeamBuilding = () => {
     state.attempts++;
 
     const leader = state.players[state.leaderIndex++ % state.players.length];
-    message.channel.send(`<@${leader}>, please put forward ${questPlayersMatrix[state.quest - 1][state.players.length - 5]} people to send to a Quest.`);
+    state.channel.send(`<@${leader}>, please put forward ${questPlayersMatrix[state.quest - 1][state.players.length - 5]} people to send to a Quest.`);
     state.phase = 'TEAM_BUILDING'
 };
 
-exports.startVotes = (message, playerTags) => {
-
+exports.startVotes = (playerTags) => {
+    state.channel.send(`Everyone, please *Accept* or *Reject* this team.`);
+    state.phase = 'VOTES';
 };
 
 const isLastAttempt = () => (state.quest === 1 && state.attempts === 2)
