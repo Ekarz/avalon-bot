@@ -3,13 +3,14 @@ const { shuffle } = require('../utils/arrays');
 const { getKnowledgeMap } = require('./roleAttribution');
 const { attributeRoles } = require('./roleAttribution');
 
-exports.questPlayersMatrix = [
+const questPlayersMatrix = [
     [2, 2, 2, 3, 3, 3],
     [3, 3, 3, 4, 4, 4],
     [2, 4, 3, 4, 4, 4],
     [3, 3, 4, 5, 5, 5],
     [3, 4, 4, 5, 5, 4]
 ];
+exports.questPlayersMatrix = questPlayersMatrix;
 
 exports.startGame = () => {
     state.channel.send('Attributing roles to players...');
@@ -23,9 +24,13 @@ exports.startGame = () => {
 const sendInformationToPlayers = () => {
     const map = getKnowledgeMap(state.players);
 
+    const users = Object.values(state.channel.members).map(member => member.user);
+
     Object.entries(map).forEach(([playerName, seenPlayerNames]) => {
         const player = state.players.find(p => p.name === playerName);
-        playerName.send(`${player.description} ${seenPlayerNames}`);
+        const user = users.find(u => u.username === playerName);
+
+        user.send(`${player.description} ${seenPlayerNames}`);
     });
 };
 
@@ -83,7 +88,7 @@ const isRejected = votes => {
     const counter = { accept: 0, reject: 0 };
     votes.forEach(vote => counter[vote]++);
 
-    return counter.reject >= Math.floor(votes.length / 2);
+    return counter.reject >= Math.ceil(votes.length / 2);
 };
 
 const startQuestActions = () => {
