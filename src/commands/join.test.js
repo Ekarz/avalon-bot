@@ -3,8 +3,10 @@ const host = require('./host');
 const state = require('../game/state');
 const { playerTags } = require('../game/state');
 
-const message = name => ({
-    author: name,
+const names = ['Alice', 'Bob', 'Connor', 'Dave', 'Edith'];
+
+const message = username => ({
+    author: { id: names.indexOf(username).toString(), name: username },
     react: jest.fn()
 });
 

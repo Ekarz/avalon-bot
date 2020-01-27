@@ -9,15 +9,15 @@ exports.execute = (message, args) => {
     const action = args[0].toLowerCase();
 
     if (!state.started || state.phase !== 'QUEST'
-        || isIllegal(action, message.author)
-        || !state.team.includes(message.author)
-        || Object.keys(state.actions).includes(message.author)) {
+        || isIllegal(action, message.author.username)
+        || !state.team.includes(message.author.id)
+        || Object.keys(state.actions).includes(message.author.username)) {
         return message.react('🚫');
     }
 
     message.react('👍');
-    state.actions[message.author] = action;
-    state.channel.send(`${message.author} has participated.`);
+    state.actions[message.author.username] = action;
+    state.channel.send(`${message.author.username} has participated.`);
 
     if (Object.keys(state.actions).length === state.team.length) {
         handleQuestResults();

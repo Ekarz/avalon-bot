@@ -10,13 +10,14 @@ exports.execute = (message, args) => {
 
     if (!state.started || state.phase !== 'VOTES'
         || (vote !== 'accept' && vote !== 'reject')
-        || Object.keys(state.votes).includes(message.author)) {
+        || !state.playerTags.map(p => p.id).includes(message.author.id)
+        || Object.keys(state.votes).includes(message.author.username)) {
         return message.react('🚫');
     }
 
     message.react('👍');
-    state.votes[message.author] = vote;
-    state.channel.send(`${message.author} has voted.`);
+    state.votes[message.author.username] = vote;
+    state.channel.send(`${message.author.username} has voted.`);
 
     if (Object.keys(state.votes).length === state.players.length) {
         handleVoteResults();

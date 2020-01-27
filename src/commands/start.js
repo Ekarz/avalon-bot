@@ -6,7 +6,7 @@ exports.channelOnly = true;
 exports.description = 'Start the game';
 exports.usage = '';
 exports.execute = (message, args) => {
-    if (state.playerTags.length < 5 || message.author !== state.host) {
+    if (state.playerTags.length < 5 || message.author.id !== state.host) {
         return message.react('🚫');
     }
 

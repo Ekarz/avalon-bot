@@ -14,7 +14,7 @@ exports.questPlayersMatrix = questPlayersMatrix;
 
 exports.startGame = () => {
     state.channel.send('Attributing roles to players...');
-    state.players = attributeRoles(state.playerTags);
+    state.players = attributeRoles(state.playerTags.map(p => p.username));
 
     sendInformationToPlayers();
 
@@ -24,13 +24,11 @@ exports.startGame = () => {
 const sendInformationToPlayers = () => {
     const map = getKnowledgeMap(state.players);
 
-    const users = Object.values(state.channel.members).map(member => member.user);
-
     Object.entries(map).forEach(([playerName, seenPlayerNames]) => {
         const player = state.players.find(p => p.name === playerName);
-        const user = users.find(u => u.username === playerName);
+        const user = state.channel.members.get(state.playerTags.find(p => p.username === playerName).id);
 
-        user.send(`${player.description} ${seenPlayerNames}`);
+        user.send(`${player.description} ${seenPlayerNames.map(name => `**${name}**`)}`);
     });
 };
 
@@ -43,11 +41,11 @@ const startQuest = () => {
 const startTeamBuilding = () => {
     state.attempts++;
 
-    const leader = state.playerTags[state.leaderIndex++ % state.playerTags.length];
-    state.channel.send(`<@${leader}>, please put forward ${questPlayersMatrix[state.quest - 1][state.players.length - 5]} people to send to a Quest.`);
+    const leader = state.playerTags[++state.leaderIndex % state.playerTags.length];
+    state.channel.send(`${leader}, please put forward ${questPlayersMatrix[state.quest - 1][state.players.length - 5]} people to send to a Quest.`);
 
     if (needsDoubleFail()) {
-        state.channel.send(`Please note that this quest needs 2 Fails to fail.`);
+        state.channel.send(`**Please note that this quest needs 2 Fails to fail.**`);
     }
 
     state.phase = 'TEAM_BUILDING';
@@ -69,10 +67,10 @@ const isLastAttempt = () => (state.quest === 1 && state.attempts === 2)
 
 exports.handleVoteResults = () => {
     const stringData = [];
-    stringData.push('Here are the results :');
+    stringData.push('**Here are the results :**');
 
-    for (const [playerTag, vote] of Object.entries(state.votes)) {
-        stringData.push(`${playerTag} voted ${vote}`);
+    for (const [playerName, vote] of Object.entries(state.votes)) {
+        stringData.push(`**${playerName}** voted **${vote}**`);
     }
 
     state.channel.send(stringData.join('\n'));
@@ -95,14 +93,14 @@ const isRejected = votes => {
 const startQuestActions = () => {
     state.attempts = 0;
     state.actions = {};
-    state.channel.send(`${state.team} have been chosen to go in a Quest ! They can make it **Succeed** or **Fail**`);
+    state.channel.send(`${state.team.map(id => `<@!${id}>`)} have been chosen to go in a Quest ! They can make it **Succeed** or **Fail**`);
     state.phase = 'QUEST';
 };
 
 exports.handleQuestResults = () => {
     const results = shuffle(Object.values(state.actions));
 
-    state.channel.send(`The results are : ${results}`);
+    state.channel.send(`The results are : ${results.map(str => `**${str}**`)}`);
 
     if (isFailed(results)) {
         state.channel.send(`The quest has failed...`);
@@ -124,7 +122,7 @@ const handleEndOfQuest = () => {
         state.endGame();
     } else if (state.results.filter(res => res === 'SUCCESS').length >= 3) {
         state.channel.send(`Good wins ! 
-        ${state.players.find(player => player.role === 'Assassin').name}, as the Assassin, who do you **kill** ?`);
+        ${state.playerTags.find(p => p.username === state.players.find(player => player.role === 'Assassin').name)}, as the Assassin, who do you **kill** ?`);
         state.phase = 'ASSASSIN';
     } else {
         startQuest();

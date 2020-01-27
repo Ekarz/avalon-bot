@@ -23,7 +23,7 @@ exports.minion = name => ({
     role: 'Minion of Mordred',
     description: `You are a **minion of Mordred**. 
     You're working for **Evil**. 
-    You know your accomplices beforehand : they are`,
+    You know your accomplices beforehand :`,
     isEvil: true,
     knowledge: other => other.isEvil && other.name !== name
 });
@@ -34,7 +34,7 @@ exports.assassin = name => ({
     description: `You are the **Assassin**. 
     You're working for **Evil**. 
     If Good manages to find the Graal, you can still try to kill Merlin, if you manage to find out who he is.
-    You know your accomplices beforehand : they are`,
+    You know your accomplices beforehand :`,
     isEvil: true,
     knowledge: other => other.isEvil && other.name !== name
 });

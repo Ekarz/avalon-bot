@@ -2,21 +2,36 @@ const state = require('./state');
 const { startGame, startVotes, handleVoteResults, handleQuestResults } = require('./manager');
 const { merlin, assassin, minion, servant } = require('./roles');
 
-
 // tests keep state from one to the other
 
 beforeAll(() => {
     state.channel = {
         send: jest.fn(),
-        members: [
-            { user: { username: 'Alice', send: jest.fn() } },
-            { user: { username: 'Bob', send: jest.fn() } },
-            { user: { username: 'Connor', send: jest.fn() } },
-            { user: { username: 'Dave', send: jest.fn() } },
-            { user: { username: 'Edith', send: jest.fn() } }
-        ]
+        members: {
+            get: id => {
+                switch (id) {
+                    case '0':
+                        return { id: '0', username: 'Alice', send: jest.fn() };
+                    case '1':
+                        return { id: '1', username: 'Bob', send: jest.fn() };
+                    case '2':
+                        return { id: '2', username: 'Connor', send: jest.fn() };
+                    case '3':
+                        return { id: '3', username: 'Dave', send: jest.fn() };
+                    case '4':
+                        return { id: '4', username: 'Edith', send: jest.fn() };
+                    default:
+                        return undefined;
+                }
+            }
+        }
     };
-    state.playerTags = ['Alice', 'Bob', 'Connor', 'Dave', 'Edith'];
+    state.playerTags = [
+        { id: '0', username: 'Alice' },
+        { id: '1', username: 'Bob' },
+        { id: '2', username: 'Connor' },
+        { id: '3', username: 'Dave' },
+        { id: '4', username: 'Edith' }];
     state.players = [merlin('Alice'), servant('Bob'), minion('Connor'), assassin('Dave'), servant('Edith')];
 });
 

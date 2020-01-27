@@ -10,6 +10,6 @@ exports.execute = (message, args) => {
     }
 
     state.playerTags.push(message.author);
-    state.host = message.author;
+    state.host = message.author.id;
     message.react('👍');
 };

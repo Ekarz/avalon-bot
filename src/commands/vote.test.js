@@ -1,13 +1,19 @@
 const vote = require('./vote');
 const state = require('../game/state');
 
-const message = name => ({
-    author: name,
+const message = author => ({
+    author: state.playerTags.find(p => p.username === author) || author,
     react: jest.fn()
 });
 
 beforeAll(() => {
     state.channel = { send: jest.fn() };
+    state.playerTags = [
+        { id: '0', username: 'Alice' },
+        { id: '1', username: 'Bob' },
+        { id: '2', username: 'Connor' },
+        { id: '3', username: 'Dave' },
+        { id: '4', username: 'Edith' }];
 });
 
 beforeEach(() => {
@@ -58,7 +64,6 @@ it('should accept vote accepted', () => {
     expect(state.votes).toEqual({ Alice: 'accept' });
 });
 
-
 it('should accept vote rejected', () => {
     state.started = true;
     state.phase = 'VOTES';
@@ -80,4 +85,14 @@ it('should refuse vote if already voted', () => {
 
     expect(msg.react).toHaveBeenLastCalledWith('🚫');
     expect(state.votes).toEqual({ Alice: 'accept' });
+});
+
+it('should refuse vote if not in players', () => {
+    state.started = true;
+    state.phase = 'VOTES';
+    const msg = message({ author: { id: '123', username: 'Toto' } });
+
+    vote.execute(msg, ['accept']);
+
+    expect(msg.react).toHaveBeenLastCalledWith('🚫');
 });

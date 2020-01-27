@@ -5,8 +5,8 @@ const state = require('../game/state');
 
 jest.mock('../game/manager');
 
-const message = name => ({
-    author: name,
+const message = id => ({
+    author: { id },
     react: jest.fn(),
     channel: { send: jest.fn() }
 });
@@ -16,35 +16,35 @@ beforeAll(() => {
 });
 
 it('should not start if there is not enough players', () => {
-    host.execute(message('Alice'));
-    join.execute(message('Bob'));
-    join.execute(message('Connor'));
+    host.execute(message('123'));
+    join.execute(message('456'));
+    join.execute(message('789'));
 
     expect(state.started).toBe(false);
-    start.execute(message('Alice'));
+    start.execute(message('123'));
     expect(state.started).toBe(false);
 });
 
 it('should not start if the message is not from the owner', () => {
-    host.execute(message('Alice'));
-    join.execute(message('Bob'));
-    join.execute(message('Connor'));
-    join.execute(message('Dave'));
-    join.execute(message('Edith'));
+    host.execute(message('123'));
+    join.execute(message('456'));
+    join.execute(message('789'));
+    join.execute(message('111'));
+    join.execute(message('999'));
 
     expect(state.started).toBe(false);
-    start.execute(message('Bob'));
+    start.execute(message('456'));
     expect(state.started).toBe(false);
 });
 
 it('should start if the message is from the owner', () => {
-    host.execute(message('Alice'));
-    join.execute(message('Bob'));
-    join.execute(message('Connor'));
-    join.execute(message('Dave'));
-    join.execute(message('Edith'));
+    host.execute(message('123'));
+    join.execute(message('456'));
+    join.execute(message('789'));
+    join.execute(message('111'));
+    join.execute(message('999'));
 
     expect(state.started).toBe(false);
-    start.execute(message('Alice'));
+    start.execute(message('123'));
     expect(state.started).toBe(true);
 });

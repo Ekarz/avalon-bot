@@ -3,13 +3,18 @@ const state = require('../game/state');
 const { merlin, servant, minion, assassin } = require('../game/roles');
 
 const message = name => ({
-    author: name,
+    author: state.playerTags.find(p => p.username === name),
     react: jest.fn()
 });
 
 beforeAll(() => {
     state.channel = { send: jest.fn() };
-    state.playerTags = ['Alice', 'Bob', 'Connor', 'Dave', 'Edith'];
+    state.playerTags = [
+        { id: '0', username: 'Alice' },
+        { id: '1', username: 'Bob' },
+        { id: '2', username: 'Connor' },
+        { id: '3', username: 'Dave' },
+        { id: '4', username: 'Edith' }];
     state.players = [merlin('Alice'), servant('Bob'), minion('Connor'), assassin('Dave'), servant('Edith')];
 });
 
@@ -53,7 +58,7 @@ it('should refuse action if wrong action', () => {
 it('should refuse action if player not in quest', () => {
     state.started = true;
     state.phase = 'QUEST';
-    state.team = ['Bob', 'Connor', 'Dave'];
+    state.team = ['1', '2', '3'];
     const msg = message('Alice');
 
     quest.execute(msg, ['fail']);
@@ -65,8 +70,7 @@ it('should refuse action if player not in quest', () => {
 it('should accept success', () => {
     state.started = true;
     state.phase = 'QUEST';
-    state.team = ['Alice', 'Bob', 'Connor', 'Dave'];
-
+    state.team = ['0', '1', '2', '3'];
     const msg = message('Connor');
 
     quest.execute(msg, ['success']);
@@ -78,7 +82,7 @@ it('should accept success', () => {
 it('should accept fail', () => {
     state.started = true;
     state.phase = 'QUEST';
-    state.team = ['Alice', 'Bob', 'Connor', 'Dave'];
+    state.team = ['0', '1', '2', '3'];
     const msg = message('Connor');
 
     quest.execute(msg, ['fail']);
@@ -90,9 +94,8 @@ it('should accept fail', () => {
 it('should refuse fail if good', () => {
     state.started = true;
     state.phase = 'QUEST';
-    state.team = ['Alice', 'Bob', 'Connor', 'Dave'];
+    state.team = ['0', '1', '2', '3'];
     const msg = message('Alice');
-
     quest.execute(msg, ['fail']);
 
     expect(msg.react).toHaveBeenCalledWith('🚫');
@@ -102,7 +105,7 @@ it('should refuse fail if good', () => {
 it('should refuse action if already participated', () => {
     state.started = true;
     state.phase = 'QUEST';
-    state.team = ['Alice', 'Bob', 'Connor', 'Dave'];
+    state.team = ['0', '1', '2', '3'];
     const msg = message('Connor');
 
     quest.execute(msg, ['fail']);
