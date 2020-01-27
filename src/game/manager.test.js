@@ -39,13 +39,11 @@ it('should start a vote', () => {
 });
 
 it('should handle vote refused', () => {
-    state.votes = [{
-        Alice: 'reject',
-        Bob: 'reject',
-        Connor: 'accept',
-        Dave: 'accept',
-        Edith: 'reject',
-    }];
+    state.votes.Alice = 'reject';
+    state.votes.Bob = 'reject';
+    state.votes.Connor = 'accept';
+    state.votes.Dave = 'accept';
+    state.votes.Edith = 'reject';
     handleVoteResults();
 
     expect(state.quest).toBe(1);
@@ -63,16 +61,14 @@ it('should handle last vote accepted by default', () => {
     expect(state.phase).toBe('QUEST');
 });
 
-it('should handle quest succeeded', () => {
-    state.actions = [
-        { Alice: 'success'},
-        { Bob: 'success'},
-        { Dave: 'success'}
-    ];
+it('should handle quest failed', () => {
+    state.actions.Alice = 'success';
+    state.actions.Bob = 'success';
+    state.actions.Dave = 'fail';
     handleQuestResults();
 
     expect(state.quest).toBe(2);
-    expect(state.results).toEqual(['SUCCESS']);
+    expect(state.results).toEqual(['FAIL']);
     expect(state.attempts).toBe(1);
     expect(state.leaderIndex).toBe(3);
     expect(state.phase).toBe('TEAM_BUILDING');
@@ -80,32 +76,28 @@ it('should handle quest succeeded', () => {
 
 it('should handle vote accepted', () => {
     startVotes();
-    state.votes = [{
-        Alice: 'accept',
-        Bob: 'reject',
-        Connor: 'accept',
-        Dave: 'accept',
-        Edith: 'reject',
-    }];
+    state.votes.Alice = 'accept';
+    state.votes.Bob = 'reject';
+    state.votes.Connor = 'accept';
+    state.votes.Dave = 'accept';
+    state.votes.Edith = 'reject';
     handleVoteResults();
 
     expect(state.quest).toBe(2);
-    expect(state.results).toEqual(['SUCCESS']);
+    expect(state.results).toEqual(['FAIL']);
     expect(state.attempts).toBe(0);
     expect(state.leaderIndex).toBe(3);
     expect(state.phase).toBe('QUEST');
 });
 
-it('should handle quest failed', () => {
-    state.actions = [
-        { Alice: 'success'},
-        { Bob: 'success'},
-        { Dave: 'fail'}
-    ];
+it('should handle quest succeeded', () => {
+    state.actions.Alice = 'success';
+    state.actions.Bob = 'success';
+    state.actions.Connor = 'success';
     handleQuestResults();
 
     expect(state.quest).toBe(3);
-    expect(state.results).toEqual(['SUCCESS', 'FAIL']);
+    expect(state.results).toEqual(['FAIL', 'SUCCESS']);
     expect(state.attempts).toBe(1);
     expect(state.leaderIndex).toBe(4);
     expect(state.phase).toBe('TEAM_BUILDING');

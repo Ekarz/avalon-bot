@@ -10,15 +10,15 @@ exports.execute = (message, args) => {
 
     if (!state.started || state.phase !== 'VOTES'
         || (vote !== 'accept' && vote !== 'reject')
-        || state.votes.map(Object.keys).flat().includes(message.author)) {
+        || Object.keys(state.votes).includes(message.author)) {
         return message.react('🚫');
     }
 
     message.react('👍');
-    state.votes.push({ [message.author]: vote });
+    state.votes[message.author] = vote;
     state.channel.send(`${message.author} has voted.`);
 
-    if (state.votes.length === state.players.length) {
+    if (Object.keys(state.votes).length === state.players.length) {
         handleVoteResults();
     }
 };

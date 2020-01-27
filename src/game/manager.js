@@ -54,6 +54,7 @@ const startTeamBuilding = () => {
 };
 
 exports.startVotes = () => {
+    state.votes = {};
     if (isLastAttempt()) {
         state.channel.send('This is the last proposal for this quest and as such it cannot be rejected.');
         startQuestActions();
@@ -70,13 +71,13 @@ exports.handleVoteResults = () => {
     const stringData = [];
     stringData.push('Here are the results :');
 
-    for (const [playerTag, vote] of state.votes.map(Object.entries).flat()) {
+    for (const [playerTag, vote] of Object.entries(state.votes)) {
         stringData.push(`${playerTag} voted ${vote}`);
     }
 
     state.channel.send(stringData.join('\n'));
 
-    if (isRejected(state.votes.map(Object.values).flat())) {
+    if (isRejected(Object.values(state.votes))) {
         state.channel.send('That team has been rejected. Moving on to the next leader.');
         startTeamBuilding();
     } else {
@@ -93,12 +94,13 @@ const isRejected = votes => {
 
 const startQuestActions = () => {
     state.attempts = 0;
+    state.actions = {};
     state.channel.send(`${state.team} have been chosen to go in a Quest ! They can make it **Succeed** or **Fail**`);
     state.phase = 'QUEST';
 };
 
 exports.handleQuestResults = () => {
-    const results = shuffle(state.actions.map(Object.values).flat());
+    const results = shuffle(Object.values(state.actions));
 
     state.channel.send(`The results are : ${results}`);
 

@@ -9,8 +9,8 @@ exports.attempts = 0;
 exports.leaderIndex = 0;
 
 exports.team = [];
-exports.votes = [];
-exports.actions = [];
+exports.votes = {};
+exports.actions = {};
 exports.results = [];
 
 exports.phase = '';

@@ -14,7 +14,7 @@ beforeAll(() => {
 });
 
 beforeEach(() => {
-    state.actions = [];
+    state.actions = {};
 });
 
 it('should refuse action if game is not started', () => {
@@ -25,7 +25,7 @@ it('should refuse action if game is not started', () => {
     quest.execute(msg, ['fail']);
 
     expect(msg.react).toHaveBeenCalledWith('🚫');
-    expect(state.actions).toEqual([]);
+    expect(state.actions).toEqual({});
 });
 
 it('should refuse action if wrong phase', () => {
@@ -36,7 +36,7 @@ it('should refuse action if wrong phase', () => {
     quest.execute(msg, ['fail']);
 
     expect(msg.react).toHaveBeenCalledWith('🚫');
-    expect(state.actions).toEqual([]);
+    expect(state.actions).toEqual({});
 });
 
 it('should refuse action if wrong action', () => {
@@ -47,7 +47,7 @@ it('should refuse action if wrong action', () => {
     quest.execute(msg, ['dumb']);
 
     expect(msg.react).toHaveBeenCalledWith('🚫');
-    expect(state.actions).toEqual([]);
+    expect(state.actions).toEqual({});
 });
 
 it('should refuse action if player not in quest', () => {
@@ -59,7 +59,7 @@ it('should refuse action if player not in quest', () => {
     quest.execute(msg, ['fail']);
 
     expect(msg.react).toHaveBeenCalledWith('🚫');
-    expect(state.actions).toEqual([]);
+    expect(state.actions).toEqual({});
 });
 
 it('should accept success', () => {
@@ -72,7 +72,7 @@ it('should accept success', () => {
     quest.execute(msg, ['success']);
 
     expect(msg.react).toHaveBeenCalledWith('👍');
-    expect(state.actions).toEqual([{ Connor: 'success' }]);
+    expect(state.actions).toEqual({ Connor: 'success' });
 });
 
 it('should accept fail', () => {
@@ -84,7 +84,7 @@ it('should accept fail', () => {
     quest.execute(msg, ['fail']);
 
     expect(msg.react).toHaveBeenCalledWith('👍');
-    expect(state.actions).toEqual([{ Connor: 'fail' }]);
+    expect(state.actions).toEqual({ Connor: 'fail' });
 });
 
 it('should refuse fail if good', () => {
@@ -96,7 +96,7 @@ it('should refuse fail if good', () => {
     quest.execute(msg, ['fail']);
 
     expect(msg.react).toHaveBeenCalledWith('🚫');
-    expect(state.actions).toEqual([]);
+    expect(state.actions).toEqual({});
 });
 
 it('should refuse action if already participated', () => {
@@ -109,5 +109,5 @@ it('should refuse action if already participated', () => {
     quest.execute(msg, ['fail']);
 
     expect(msg.react).toHaveBeenLastCalledWith('🚫');
-    expect(state.actions).toEqual([{ Connor: 'fail' }]);
+    expect(state.actions).toEqual({ Connor: 'fail' });
 });

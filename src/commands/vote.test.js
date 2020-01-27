@@ -11,7 +11,7 @@ beforeAll(() => {
 });
 
 beforeEach(() => {
-    state.votes = [];
+    state.votes = {};
 });
 
 it('should refuse vote if game is not started', () => {
@@ -22,7 +22,7 @@ it('should refuse vote if game is not started', () => {
     vote.execute(msg, ['accept']);
 
     expect(msg.react).toHaveBeenCalledWith('🚫');
-    expect(state.votes).toEqual([]);
+    expect(state.votes).toEqual({});
 });
 
 it('should refuse vote if wrong phase', () => {
@@ -33,7 +33,7 @@ it('should refuse vote if wrong phase', () => {
     vote.execute(msg, ['accept']);
 
     expect(msg.react).toHaveBeenCalledWith('🚫');
-    expect(state.votes).toEqual([]);
+    expect(state.votes).toEqual({});
 });
 
 it('should refuse vote if wrong vote', () => {
@@ -44,7 +44,7 @@ it('should refuse vote if wrong vote', () => {
     vote.execute(msg, ['dumb']);
 
     expect(msg.react).toHaveBeenCalledWith('🚫');
-    expect(state.votes).toEqual([]);
+    expect(state.votes).toEqual({});
 });
 
 it('should accept vote accepted', () => {
@@ -55,7 +55,7 @@ it('should accept vote accepted', () => {
     vote.execute(msg, ['accept']);
 
     expect(msg.react).toHaveBeenCalledWith('👍');
-    expect(state.votes).toEqual([{ Alice: 'accept' }]);
+    expect(state.votes).toEqual({ Alice: 'accept' });
 });
 
 
@@ -67,7 +67,7 @@ it('should accept vote rejected', () => {
     vote.execute(msg, ['reject']);
 
     expect(msg.react).toHaveBeenCalledWith('👍');
-    expect(state.votes).toEqual([{ Alice: 'reject' }]);
+    expect(state.votes).toEqual({ Alice: 'reject' });
 });
 
 it('should refuse vote if already voted', () => {
@@ -79,5 +79,5 @@ it('should refuse vote if already voted', () => {
     vote.execute(msg, ['accept']);
 
     expect(msg.react).toHaveBeenLastCalledWith('🚫');
-    expect(state.votes).toEqual([{ Alice: 'accept' }]);
+    expect(state.votes).toEqual({ Alice: 'accept' });
 });

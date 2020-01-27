@@ -11,15 +11,15 @@ exports.execute = (message, args) => {
     if (!state.started || state.phase !== 'QUEST'
         || isIllegal(action, message.author)
         || !state.team.includes(message.author)
-        || state.actions.map(Object.keys).flat().includes(message.author)) {
+        || Object.keys(state.actions).includes(message.author)) {
         return message.react('🚫');
     }
 
     message.react('👍');
-    state.actions.push({ [message.author]: action });
+    state.actions[message.author] = action;
     state.channel.send(`${message.author} has participated.`);
 
-    if (state.actions.length === state.team.length) {
+    if (Object.keys(state.actions).length === state.team.length) {
         handleQuestResults();
     }
 };
