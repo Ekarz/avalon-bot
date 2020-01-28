@@ -49,3 +49,27 @@ exports.mordred = name => ({
     isEvil: true,
     knowledge: other => other.isEvil && other.name !== name
 });
+
+exports.percival = name => ({
+    name,
+    role: 'Percival',
+    description: `You are **Percival**. 
+    You're working for **Good**. 
+    You know who Merlin is exactly if there's only Merlin in game. 
+    However, if Morgana is also present in a game with Merlin, you will need to deduce which Merlin is the real Merlin throughout the game.
+    You will gain knowledge of two potential "Merlins" if both Merlin and Morgana are present. 
+    You know your accomplices beforehand :`,
+    isEvil: false,
+    knowledge: other => ['Merlin', 'Morgana'].includes(other.role)
+});
+
+exports.morgana = name => ({
+    name,
+    role: 'Morgana',
+    description: `You are **Morgana**. 
+    You're working for **Evil**. 
+    You appear as Merlin to the eyes of Percival.
+    You know your accomplices beforehand :`,
+    isEvil: true,
+    knowledge: other => other.isEvil && other.name !== name
+});
