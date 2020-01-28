@@ -55,10 +55,8 @@ exports.percival = name => ({
     role: 'Percival',
     description: `You are **Percival**. 
     You're working for **Good**. 
-    You know who Merlin is exactly if there's only Merlin in game. 
-    However, if Morgana is also present in a game with Merlin, you will need to deduce which Merlin is the real Merlin throughout the game.
-    You will gain knowledge of two potential "Merlins" if both Merlin and Morgana are present. 
-    You know your accomplices beforehand :`,
+    You have the power to see people with the gift of magic. (Merlin and/or Morgana). 
+    You detect magic among :`,
     isEvil: false,
     knowledge: other => ['Merlin', 'Morgana'].includes(other.role)
 });
