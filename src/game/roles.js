@@ -15,7 +15,7 @@ exports.merlin = name => ({
     You're working for **Good**. 
     Your magic allowed you to detect evil in the hearts of`,
     isEvil: false,
-    knowledge: other => other.isEvil
+    knowledge: other => other.isEvil && other.role !== 'Mordred'
 });
 
 exports.minion = name => ({
@@ -34,6 +34,17 @@ exports.assassin = name => ({
     description: `You are the **Assassin**. 
     You're working for **Evil**. 
     If Good manages to find the Graal, you can still try to kill Merlin, if you manage to find out who he is.
+    You know your accomplices beforehand :`,
+    isEvil: true,
+    knowledge: other => other.isEvil && other.name !== name
+});
+
+exports.mordred = name => ({
+    name,
+    role: 'Mordred',
+    description: `You are  **MORDRED**. 
+    You're working for **Evil**. 
+    You are unknown to Merlin.
     You know your accomplices beforehand :`,
     isEvil: true,
     knowledge: other => other.isEvil && other.name !== name
