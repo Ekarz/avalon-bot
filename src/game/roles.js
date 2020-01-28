@@ -18,6 +18,17 @@ exports.merlin = name => ({
     knowledge: other => other.isEvil && other.role !== 'Mordred'
 });
 
+exports.percival = name => ({
+    name,
+    role: 'Percival',
+    description: `You are **Percival**. 
+    You're working for **Good**. 
+    You have the power to see people with the gift of magic. (Merlin and/or Morgana). 
+    You detect magic among :`,
+    isEvil: false,
+    knowledge: other => ['Merlin', 'Morgana'].includes(other.role)
+});
+
 exports.minion = name => ({
     name,
     role: 'Minion of Mordred',
@@ -48,17 +59,6 @@ exports.mordred = name => ({
     You know your accomplices beforehand :`,
     isEvil: true,
     knowledge: other => other.isEvil && other.name !== name
-});
-
-exports.percival = name => ({
-    name,
-    role: 'Percival',
-    description: `You are **Percival**. 
-    You're working for **Good**. 
-    You have the power to see people with the gift of magic. (Merlin and/or Morgana). 
-    You detect magic among :`,
-    isEvil: false,
-    knowledge: other => ['Merlin', 'Morgana'].includes(other.role)
 });
 
 exports.morgana = name => ({

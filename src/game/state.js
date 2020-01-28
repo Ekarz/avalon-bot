@@ -16,6 +16,10 @@ exports.results = [];
 exports.phase = '';
 
 exports.endGame = () => {
+    for (const player of this.players) {
+        this.channel.send(`**${player.name}** was **${player.role}**`);
+    }
+
     this.host = '';
     this.channel = '';
     this.playerTags = [];
