@@ -71,10 +71,10 @@ exports.startVotes = () => {
 
 exports.handleVoteResults = () => {
     const stringData = [];
-    stringData.push('**Here are the results :**');
+    stringData.push('Here are the results :');
 
     for (const [playerName, vote] of Object.entries(state.votes)) {
-        stringData.push(`**${playerName}** voted **${vote}**`);
+        stringData.push(`**${vote === 'accept' ? '✔️' : '🛑'} ${playerName}** voted **${vote}**`);
     }
 
     state.channel.send(stringData.join('\n'));
