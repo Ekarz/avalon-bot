@@ -11,7 +11,7 @@ const roles = [
 exports.attributeRoles = playerNames => {
     const shuffled = shuffle(playerNames);
 
-    return shuffle(roles[playerNames.length-MIN_PLAYERS].map(role => role(shuffled.pop())));
+    return shuffle(roles[playerNames.length - MIN_PLAYERS].map(role => role(shuffled.pop())));
 };
 
 exports.getKnowledgeMap = players => players.reduce((map, player) => ({

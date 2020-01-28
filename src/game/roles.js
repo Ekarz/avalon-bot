@@ -42,7 +42,7 @@ exports.assassin = name => ({
 exports.mordred = name => ({
     name,
     role: 'Mordred',
-    description: `You are  **MORDRED**. 
+    description: `You are **Mordred**. 
     You're working for **Evil**. 
     You are unknown to Merlin.
     You know your accomplices beforehand :`,
