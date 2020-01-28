@@ -5,7 +5,12 @@ const MIN_PLAYERS = 5;
 
 const roles = [
     [merlin, servant, servant, assassin, minion],
+<<<<<<< Updated upstream
     [merlin, servant, servant, servant, assassin, mordred]
+=======
+    [merlin, servant, servant, servant, assassin, mordred],
+    [merlin, servant, servant, percival, assassin, mordred, morgana]
+>>>>>>> Stashed changes
 ];
 
 exports.attributeRoles = playerNames => {
