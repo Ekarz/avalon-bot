@@ -1,4 +1,4 @@
-const { assassin, merlin, minion, servant, mordred } = require('./roles');
+const { assassin, merlin, minion, servant, mordred, percival, morgana } = require('./roles');
 const { attributeRoles, getKnowledgeMap } = require('./roleAttribution');
 
 it('should randomly give roles to 5 players', () => {
@@ -33,4 +33,18 @@ it('should give info to players with knowledge (6 players)', () => {
     expect(map['Kim']).toEqual(['Dave']);
     expect(map['Dave']).toEqual(['Kim']);
     expect(map['Edith']).toEqual([]);
+});
+
+it('should give info to players with knowledge (7 players)', () => {
+    const players = [merlin('merlin'), servant('servant1'), servant('servant2'), mordred('mordred'), assassin('assassin'), percival('percival'), morgana('morgana')];
+
+    const map = getKnowledgeMap(players);
+
+    expect(map['merlin']).toEqual(['assassin', 'morgana']);
+    expect(map['servant1']).toEqual([]);
+    expect(map['servant2']).toEqual([]);
+    expect(map['mordred']).toEqual(['assassin', 'morgana']);
+    expect(map['assassin']).toEqual(['mordred', 'morgana']);
+    expect(map['morgana']).toEqual(['mordred', 'assassin']);
+    expect(map['percival']).toEqual(['merlin', 'morgana']);
 });

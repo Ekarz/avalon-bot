@@ -49,3 +49,25 @@ exports.mordred = name => ({
     isEvil: true,
     knowledge: other => other.isEvil && other.name !== name
 });
+
+exports.percival = name => ({
+    name,
+    role: 'Percival',
+    description: `You are **Percival**. 
+    You're working for **Good**. 
+    You have the power to see people with the gift of magic. (Merlin and/or Morgana). 
+    You detect magic among :`,
+    isEvil: false,
+    knowledge: other => ['Merlin', 'Morgana'].includes(other.role)
+});
+
+exports.morgana = name => ({
+    name,
+    role: 'Morgana',
+    description: `You are **Morgana**. 
+    You're working for **Evil**. 
+    You appear as Merlin to the eyes of Percival.
+    You know your accomplices beforehand :`,
+    isEvil: true,
+    knowledge: other => other.isEvil && other.name !== name
+});
