@@ -17,6 +17,6 @@ exports.attributeRoles = playerNames => {
 
 exports.getKnowledgeMap = players => players.reduce((map, player) => ({
     ...map,
-    [player.name]: players.filter(player.knowledge)
-                          .map(seenPlayer => seenPlayer.name)
+    [player.name]: shuffle(players.filter(player.knowledge)
+                                  .map(seenPlayer => seenPlayer.name))
 }), {});
