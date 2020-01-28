@@ -104,13 +104,13 @@ const startQuestActions = () => {
 exports.handleQuestResults = () => {
     const results = shuffle(Object.values(state.actions));
 
-    state.channel.send(`The results are : ${results.map(str => `**${str}**`)}`);
+    state.channel.send(`The results are : ${results.map(str => `**${str === 'fail' ? '💥' : '🏆'}**`)}`);
 
     if (isFailed(results)) {
-        state.channel.send(`The quest has failed...`);
+        state.channel.send(`The quest has **failed**...`);
         state.results.push('FAIL');
     } else {
-        state.channel.send(`The quest has succeeded !`);
+        state.channel.send(`The quest has **succeeded** !`);
         state.results.push('SUCCESS');
     }
 
