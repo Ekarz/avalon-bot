@@ -23,7 +23,7 @@ it('should give info to players with knowledge (5 players)', () => {
 });
 
 it('should give info to players with knowledge (6 players)', () => {
-    const players = [merlin('Alice'), servant('Bob'), servant('Tom'), mordred('Kim'), assassin('Dave'), servant('Edith'), ];
+    const players = [merlin('Alice'), servant('Bob'), servant('Tom'), mordred('Kim'), assassin('Dave'), servant('Edith')];
 
     const map = getKnowledgeMap(players);
 
@@ -36,7 +36,15 @@ it('should give info to players with knowledge (6 players)', () => {
 });
 
 it('should give info to players with knowledge (7 players)', () => {
-    const players = [merlin('merlin'), servant('servant1'), servant('servant2'), mordred('mordred'), assassin('assassin'), percival('percival'), morgana('morgana')];
+    const players = [
+        merlin('merlin'),
+        servant('servant1'),
+        servant('servant2'),
+        mordred('mordred'),
+        assassin('assassin'),
+        percival('percival'),
+        morgana('morgana')
+    ];
 
     const map = getKnowledgeMap(players);
 
@@ -47,4 +55,32 @@ it('should give info to players with knowledge (7 players)', () => {
     expect(map['assassin'].sort()).toEqual(['mordred', 'morgana']);
     expect(map['morgana'].sort()).toEqual(['assassin', 'mordred']);
     expect(map['percival'].sort()).toEqual(['merlin', 'morgana']);
+});
+
+it('should give info to players with knowledge (10 players)', () => {
+    const players = [
+        merlin('merlin'),
+        percival('percival'),
+        servant('servant1'),
+        servant('servant2'),
+        servant('servant3'),
+        servant('servant4'),
+        mordred('mordred'),
+        assassin('assassin'),
+        morgana('morgana'),
+        minion('minion'),
+    ];
+
+    const map = getKnowledgeMap(players);
+
+    expect(map['merlin'].sort()).toEqual(['assassin', 'minion', 'morgana']);
+    expect(map['percival'].sort()).toEqual(['merlin', 'morgana']);
+    expect(map['servant1'].sort()).toEqual([]);
+    expect(map['servant2'].sort()).toEqual([]);
+    expect(map['servant3'].sort()).toEqual([]);
+    expect(map['servant4'].sort()).toEqual([]);
+    expect(map['mordred'].sort()).toEqual(['assassin', 'minion', 'morgana']);
+    expect(map['assassin'].sort()).toEqual(['minion', 'mordred', 'morgana']);
+    expect(map['morgana'].sort()).toEqual(['assassin', 'minion', 'mordred']);
+    expect(map['minion'].sort()).toEqual(['assassin', 'mordred', 'morgana']);
 });
