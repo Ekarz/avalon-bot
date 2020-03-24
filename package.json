@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "description": "A discord bot to play The Resistance: Avalon with friends",
   "main": "src/index.js",
-  "type": "module",
   "scripts": {
     "start": "node .",
     "test": "jest"
