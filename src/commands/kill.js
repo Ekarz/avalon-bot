@@ -18,5 +18,5 @@ exports.execute = (message, args) => {
     }
 
     message.react('👍');
-    kill(playerId);
+    kill(playerTag.username);
 };
